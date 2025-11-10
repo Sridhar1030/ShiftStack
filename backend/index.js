@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import errorHandler from "./middleware/errorHandler.js";
-
+import authRoutes from "./routes/authRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -18,7 +18,7 @@ app.get("/health" , (req,res)=>{
 })
 
 
-// app.use("/api/auth", authRoutes);
+app.use("/api/auth", authRoutes);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
