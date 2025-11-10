@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+    mongo:
+        image: mongo
+        container_name: mongo
+        restart: always
+        volumes:
+            - mongo_data:/data/db
+        ports:
+            - "27017:27017"
+
+    backend:
+        build: ./backend
+        container_name: shiftstack-backend
+        restart: always
+        environment:
+            - PORT=4000
+            - MONGO_URI=mongodb://mongo:27017/shiftstack
+            - JWT_SECRET=devsecret
+        ports:
+            - "4000:4000"
+        depends_on:
+            - mongo
+
+    frontend:
+        build: ./frontend
+        container_name: shiftstack-frontend
+        restart: always
+        ports:
+            - "3000:80"
+        depends_on:
+            - backend
+
+volumes:
+    mongo_data:
