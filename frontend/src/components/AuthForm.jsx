@@ -6,9 +6,10 @@ export default function AuthForm() {
     const [form, setForm] = useState({ username: "", email: "", password: "" });
     const [token, setToken] = useState("");
     const baseUrl = import.meta.env.VITE_API_URL;
+    console.log("backend url is ",baseUrl)
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const url = isLogin ? baseUrl + "/auth/login" : baseUrl + "/auth/register";
+        const url = isLogin ? `/api/auth/login` : `/api/auth/register`;
         try {
             const res = await axios.post(url, form);
             setToken(res.data.token || "Success! User created.");
